@@ -278,7 +278,23 @@ h1 {
     .result_sec h2 {
         font-size: 1.4rem;
     }
-    .play_sec header {
-        gap: 4rem;
+    .play_sec {
+        border-radius: .5rem;
+        padding: 1.5rem 3rem;
+    }
+    
+    .coins,
+    .score {
+        gap: .5rem;
+    }
+    
+    .coins img,
+    .score img {
+        width: 1.5rem;
+    }
+    
+    .coins span,
+    .score span {
+        font-size: 1rem;
     }
 }
