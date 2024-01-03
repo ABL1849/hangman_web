@@ -260,14 +260,18 @@ h1 {
 
     .word span {
         width: 1rem;
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin: 0 .2rem;
         border-bottom: 4px solid #004A4A;
         padding-bottom: 4px;
     }
 
     .alphas {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        gap: .6rem;
+    }
+    .play_svg{
+        scale: .8;
     }
 
     .alphas div {
