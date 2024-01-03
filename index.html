@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" href="resources/man1.svg" sizes="any" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=League+Spartan:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bangers&family=League+Spartan:wght@600;700&family=Lobster&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <section class="loading">
+        <svg class="svg_l" width="160" height="160" viewBox="0 0 160 160" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_5_80)">
+                <path
+                    d="M11.2699 152.354L30.6103 113.052V107.811V7.62939e-06H137.252C140.181 7.62939e-06 142.554 2.37382 142.554 5.30264C142.554 8.23147 140.181 10.6053 137.252 10.6053H126.94V48.3512C129.153 45.5903 132.548 43.8157 136.363 43.8157C143.03 43.8157 148.437 49.2209 148.437 55.8898C148.437 62.0833 143.77 67.1809 137.764 67.8755C145.02 78.7442 150.514 90.9314 149.034 104.321C148.292 111.039 137.678 111.111 138.429 104.321C139.306 96.3772 137.337 89.1373 134.01 82.3782V104.321C134.01 104.929 133.946 105.521 133.84 106.099C133.374 118.284 136.665 130.164 136.937 142.323C137.091 149.165 126.486 149.149 126.332 142.323C126.222 137.439 125.623 132.605 124.976 127.778C124.559 133.064 124.089 138.348 123.845 143.648C123.532 150.461 112.927 150.487 113.24 143.648C113.793 131.548 115.532 119.5 115.064 107.377C114.746 106.413 114.565 105.388 114.565 104.321V78.8767C111.286 86.03 110.788 94.196 110.146 102.846C109.643 109.623 99.0338 109.673 99.5411 102.846C100.731 86.8519 102.033 71.6846 115.235 60.8C116.209 59.9958 117.264 59.6034 118.3 59.5203C119.458 58.6118 120.822 57.9561 122.316 57.6485C121.897 57.1801 121.635 56.5685 121.635 55.8898V10.6053H94.6203C94.4435 10.8545 94.2579 11.0984 94.0352 11.3211L43.091 62.2636C42.5395 62.8133 41.8961 63.2074 41.2139 63.4655V107.813V113.153L58.8646 152.523C60.0647 155.198 58.8681 158.333 56.1956 159.532C55.4939 159.848 54.7568 160 54.0286 160C52.003 160 50.0693 158.833 49.1873 156.866L41.2121 139.074V154.696C41.2121 157.623 38.8383 159.998 35.9095 159.998C32.9806 159.998 30.6068 157.623 30.6068 154.696V137.068L20.7793 157.036C19.8584 158.911 17.9759 159.998 16.021 159.998C15.2345 159.998 14.4373 159.821 13.6843 159.45C11.056 158.158 9.9778 154.982 11.2699 152.354ZM79.7552 10.6053H41.2156V49.1431L79.7552 10.6053Z" />
+            </g>
+        </svg>
+        <h1 class="loading_txt_h1">HANGMAN</h1>
+        <div class="btns">
+            <button class="btn play_btn" onclick="play()">Play Now</button>
+            <button class="btn how_to_btn">How to Play?</button>
+        </div>
+    </section>
+    <section class="play_sec">
+        <header>
+            <div class="coins">
+                <img src="resources/coin.png" alt="#">
+                <span class="coin_txt">80</span>
+            </div>
+            <div class="score">
+                <img src="resources/reward.png" alt="#">
+                <span class="score_txt">0</span>
+            </div>
+        </header>
+        <section class="word_guess">
+            <h2 class="word_title">Hangman</h2>
+            <div class="word">
+            </div>
+        </section>
+        <section class="result_sec win">
+            <h2>Well Done!<br>You guessed it right</h2>
+            <div class="icon_win">
+                <div class="score">
+                    <img src="resources/reward.png" alt="#">
+                    <span class="score_txt">10</span>
+                </div>
+                <div class="coins">
+                    <img src="resources/coin.png" alt="#">
+                    <span class="coin_txt">80</span>
+                </div>
+            </div>
+            <div class="btns_win">
+                <button class="btn home_btn">Home</button>
+                <button class="btn next_word" onclick="next_word_func()">Next Word</button>
+            </div>
+        </section>
+        <section class="result_sec loose">
+            <h2>Each attempt brings you closer to success.<br>Ready to dive back in?</h2>
+            <div class="icon_win">
+                <div class="score">
+                    <img src="resources/reward.png" alt="#">
+                    <span  class="score_txt">10</span>
+                </div>
+                <div class="coins">
+                    <img src="resources/coin.png" alt="#">
+                    <span class="coin_txt">80</span>
+                </div>
+            </div>
+            <div class="btns_win">
+                <button class="btn home_btn">Home</button>
+                <button class="btn next_word" onclick="next_word_func()">Next Word</button>
+            </div>
+        </section>
+        <section class="play_body">
+            <div class="alphas">
+                <div class="alpha1">
+                    <span class="letter">Q</span>
+                    <span class="letter">W</span>
+                    <span class="letter">E</span>
+                    <span class="letter">R</span>
+                    <span class="letter">T</span>
+                    <span class="letter">Y</span>
+                    <span class="letter">U</span>
+                    <span class="letter">I</span>
+                    <span class="letter">O</span>
+                    <span class="letter">P</span>
+                </div>
+                <div class="alpha2">
+                    <span class="letter">A</span>
+                    <span class="letter">S</span>
+                    <span class="letter">D</span>
+                    <span class="letter">F</span>
+                    <span class="letter">G</span>
+                    <span class="letter">H</span>
+                    <span class="letter">J</span>
+                    <span class="letter">K</span>
+                    <span class="letter">L</span>
+                </div>
+                <div class="alpha3">
+                    <span class="letter">Z</span>
+                    <span class="letter">X</span>
+                    <span class="letter">C</span>
+                    <span class="letter">V</span>
+                    <span class="letter">B</span>
+                    <span class="letter">N</span>
+                    <span class="letter">M</span>
+                </div>
+            </div>
+            <div class="right">
+                <svg class="play_svg" width="320" height="320" viewBox="0 0 320 320" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M297.46 297.194L258.779 224.122V214.378V13.9248H45.4966C39.639 13.9248 34.8914 18.3384 34.8914 23.784C34.8914 29.2295 39.639 33.6431 45.4966 33.6431H66.1204V103.824C61.6944 98.6904 54.9035 95.3909 47.2748 95.3909C33.9404 95.3909 23.1266 105.441 23.1266 117.84C23.1266 129.356 32.4592 138.834 44.4715 140.125C29.9599 160.333 18.9729 182.993 21.9317 207.887C23.4165 220.378 44.6447 220.513 43.1423 207.887C41.3889 193.118 45.327 179.657 51.98 167.09V207.887C51.98 209.017 52.1073 210.118 52.3194 211.193C53.2526 233.849 46.6703 255.937 46.1259 278.544C45.8183 291.266 67.0289 291.236 67.3364 278.544C67.5556 269.464 68.754 260.476 70.0479 251.5C70.8821 261.33 71.8225 271.153 72.3103 281.009C72.936 293.675 94.1466 293.724 93.5209 281.009C92.4144 258.51 88.9358 236.11 89.8726 213.569C90.509 211.778 90.8695 209.872 90.8695 207.887V160.579C97.4271 173.879 98.424 189.063 99.7073 205.146C100.715 217.746 121.932 217.838 120.918 205.146C118.539 175.408 115.933 147.207 89.5297 126.97C87.5819 125.474 85.4715 124.745 83.3999 124.59C81.0844 122.901 78.3553 121.682 75.3682 121.11C76.206 120.239 76.7292 119.102 76.7292 117.84V33.6431H130.76C131.113 34.1065 131.484 34.56 131.93 34.9741L233.818 129.691C234.921 130.713 236.208 131.446 237.572 131.926V214.381V224.309L202.271 297.51C199.871 302.482 202.264 308.312 207.609 310.54C209.012 311.129 210.486 311.411 211.943 311.411C215.994 311.411 219.861 309.242 221.625 305.584L237.576 272.504V301.549C237.576 306.991 242.323 311.408 248.181 311.408C254.039 311.408 258.786 306.991 258.786 301.549V268.774L278.441 305.9C280.283 309.387 284.048 311.408 287.958 311.408C289.531 311.408 291.125 311.079 292.631 310.389C297.888 307.987 300.044 302.081 297.46 297.194ZM160.49 33.6431H237.569V105.296L160.49 33.6431Z" />
+                </svg>
+            </div>
+        </section>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"
+        integrity="sha512-EZI2cBcGPnmR89wTgVnN3602Yyi7muWo8y1B3a8WmIv1J9tYG+udH4LvmYjLiGp37yHB7FfaPBo8ly178m9g4Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
