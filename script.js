@@ -3,6 +3,23 @@ const win_audio = new Audio("resources/win_aud.wav");
 const defeat_audio = new Audio("resources/defeat.mp3");
 const buttons = document.querySelectorAll("button");
 const letters = document.querySelectorAll('.letter');
+const word = document.querySelector('.word');
+const word_title = document.querySelector('.word_title');
+const score_txts = document.querySelectorAll('.score_txt');
+const coin_txts = document.querySelectorAll('.coin_txt');
+const alphas = document.querySelector('.alphas');
+const path = document.querySelector('.play_svg path');
+const play_svg = document.querySelector('.play_svg');
+const loose = document.querySelector('.loose');
+const win = document.querySelector('.win');
+const play_body = document.querySelector('.play_body');
+const result_sec = document.querySelector('.result_sec');
+const increments = Array.from({ length: 7 }, (_, i) => 2351 - i * 391).concat([0]);
+const loading = document.querySelector('.loading');
+const play_sec = document.querySelector('.play_sec');
+const svg_l = document.querySelector('.svg_l');
+const sentence = document.querySelectorAll('.sentence');
+let currentWordIndex, ct = 0, f = 0, len = 0, win_ct = 0, currentWord;
 
 buttons.forEach(button => {
   button.addEventListener("click", () => {
@@ -15,31 +32,99 @@ letters.forEach(letter => {
   });
 });
 
-const easyWords = ["APPLE", "BANANA", "CAT", "DOG", "ELEPHANT", "FLOWER", "GUITAR", "HOUSE", "JACKET", "KITE", "LAMP", "MOON", "NOTEBOOK", "ORANGE", "PENGUIN", "QUEEN", "RAINBOW", "SUN", "TREE", "UMBRELLA", "VOLCANO", "WATERMELON", "XYLOPHONE", "YOGURT", "ZEBRA"];
-const titles = ["Fruit", "Fruit", "Animal", "Animal", "Animal", "Plant", "Musical Instrument", "Building", "Clothing", "Toy", "Object", "Celestial Body", "Stationery Item", "Fruit", "Bird", "Royalty", "Meteorological Phenomenon", "Celestial Body", "Plant", "Rain Gear", "Natural Disaster", "Fruit", "Musical Instrument", "Dairy Product", "Animal"];
+let gword;
 
-const word = document.querySelector('.word');
-const word_title = document.querySelector('.word_title');
-const score_txts = document.querySelectorAll('.score_txt');
-const coin_txts = document.querySelectorAll('.coin_txt');
-const alphas = document.querySelector('.alphas');
-let currentWordIndex;
-let ct = 0;
-let f = 0;
-let len = 0;
-let win_ct = 0;
+const randomWord = () => {
+  fetch('https://random-word-api.herokuapp.com/word')
+    .then(response => {
+      return response.json();
+    })
+    .then(response => {
+      gword = response
+      console.log(response);
+      if(gword[0].length <= 8){
+        randomDefinition(gword);
+      }
+      else{
+        randomWord();
+      }
+    })
+}
+
+const randomDefinition = (gword) => {
+  let flag_ex = 0;
+  fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${gword}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(response => {
+      let defs;
+      // defs.sort((a, b) => a.definition.length - b.definition.length);
+      console.log(response);
+      
+      for (let j = 0; j < response[0].meanings.length; j++) {
+        sentence[0].innerHTML = "Sentence: Not available.";
+        sentence[1].innerHTML = "Sentence: Not available.";
+        defs = response[0].meanings[j].definitions;
+        for (let i = 0; i < defs.length; i++) {
+          if (defs[i].example != undefined) {
+            word_title.innerHTML = defs[i].definition;
+            console.log("sentence:",defs[i].example);
+            sentence[0].innerHTML = `Sentence: ${defs[i].example}`;
+            sentence[1].innerHTML = `Sentence: ${defs[i].example}`;
+            flag_ex = 1;
+            break;
+          }
+        }
+        if (flag_ex == 1) {
+          break;
+        }
+      }
+      if (flag_ex != 1) {
+        defs = response[0].meanings[0].definitions;
+        word_title.innerHTML = defs[0].definition;
+      }
+      currentWord = gword[0];
+      currentWord = currentWord.toUpperCase();
+      console.log(currentWord);
+      console.log(word_title.innerHTML);
+
+      my_fun();
+      win.style.display = "none";
+      loose.style.display = "none";
+      play_body.style.display = "flex";
+      letters.forEach(function (letter) {
+        letter.style.color = '#004A4A';
+        letter.style.cursor = 'pointer';
+        letter.classList.remove('clicked');
+      });
+      ct = 0;
+      len = 0;
+      path.style.strokeDashoffset = 2351;
+      path.style.fillOpacity = 0;
+
+    })
+    .catch(err => {
+      randomWord();
+    })
+}
+randomWord();
 
 const my_fun = () => {
-
-  currentWordIndex = Math.floor(Math.random() * (easyWords.length - win_ct));
-  let currentWord = easyWords[currentWordIndex];
   word.innerHTML = '';
 
+  let r1 = Math.floor(Math.random() * currentWord.length);
+  let r2 = Math.floor(Math.random() * currentWord.length);
+  if (r1 == r2) {
+    r2 = Math.abs(r2 - 1);
+  }
   for (let i = 0; i < currentWord.length; i++) {
+    if (i == r1 || i == r2) {
+      word.innerHTML += `<span class="hidden text_select_utility visible_hint">${currentWord[i]}</span>`;
+      continue;
+    }
     word.innerHTML += `<span class="hidden text_select_utility">${currentWord[i]}</span>`;
   }
-
-  word_title.innerHTML = titles[currentWordIndex];
 
   gsap.from(alphas, {
     x: -100,
@@ -56,12 +141,11 @@ document.addEventListener('click', function (event) {
   f = 0;
   if (event.target.classList.contains('letter') && !event.target.classList.contains('clicked')) {
     let letter = event.target.innerHTML;
-    const currentWord = easyWords[currentWordIndex];
     document.querySelectorAll('.word span').forEach((span, index) => {
       if (letter === currentWord[index]) {
         span.style.color = "#004a4a";
         span.classList.remove('hidden');
-        event.target.style.color = "#008000"; //done
+        event.target.style.color = "#008000";
         f = 1;
         len++;
       }
@@ -88,6 +172,8 @@ document.addEventListener('click', function (event) {
         ease: 'linear',
         onComplete() {
           win.style.display = "flex";
+          ct = 0;
+          len = 0;
           win_audio.play();
           gsap.from('.win', {
             x: -200,
@@ -105,44 +191,27 @@ document.addEventListener('click', function (event) {
           });
         }
       });
-
-
-      let removedWord = easyWords.splice(currentWordIndex, 1)[0];
-      easyWords.push(removedWord);
-      removedWord = titles.splice(currentWordIndex, 1)[0];
-      titles.push(removedWord);
-      console.log(easyWords);
-      console.log(titles);
     }
   }
 });
 
-const path = document.querySelector('.play_svg path');
-const play_svg = document.querySelector('.play_svg');
-const loose = document.querySelector('.loose');
-const win = document.querySelector('.win');
-const play_body = document.querySelector('.play_body');
-const result_sec = document.querySelector('.result_sec');
-const increments = Array.from({ length: 7 }, (_, i) => 2351 - i * 391).concat([0]);
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('next_word')) {
 
-my_fun();
-
-function next_word_func() {
-  win.style.display = "none";
-  loose.style.display = "none";
-  play_body.style.display = "flex";
-  letters.forEach(function (letter) {
-    letter.style.color = '#004A4A';
-    letter.style.cursor = 'pointer';
-    letter.classList.remove('clicked');
-  });
-  ct = 0;
-  len = 0;
-  path.style.strokeDashoffset = 2351;
-  path.style.fillOpacity = 0;
-  my_fun();
-}
-
+    gsap.set(event.target, {
+      innerHTML: "Wait...",
+    });
+    gsap.to(event.target, {
+      delay: 15,
+      onComplete() {
+        gsap.set(event.target, {
+          innerHTML: "Next Word",
+        });
+      }
+    })
+    randomWord();
+  }
+})
 function animateSVG() {
   path.style.animation = 'none';
   if (ct <= 5) {
@@ -182,6 +251,8 @@ function animateSVG() {
           })
         });
         loose.style.display = "flex";
+        ct = 0;
+        len = 0;
         defeat_audio.play();
         gsap.from('.loose', {
           x: -200,
@@ -196,22 +267,16 @@ function animateSVG() {
         });
       }
     });
-
   }
 }
-
-
 // Main logic loading and play section
-const loading = document.querySelector('.loading');
-const play_sec = document.querySelector('.play_sec');
-const svg_l = document.querySelector('.svg_l');
 
 let tl = gsap.timeline({})
 tl.from('.loading_txt_h1', {
   x: -200,
   opacity: 0,
   duration: 1,
-  delay:.2,
+  delay: .2,
 })
   .from('.play_btn', {
     y: 100,
