@@ -164,7 +164,7 @@ h1 {
 }
 
 .word_guess h2 {
-    font-family: cursive;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
 }
 
@@ -240,7 +240,7 @@ h1 {
 
 
 .result_sec h2 {
-    font-family: cursive;
+    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     text-align: center;
 }
@@ -277,8 +277,6 @@ h1 {
         padding-bottom: 4px;
     }
     .word_guess h2 {
-        font-family: cursive;
-        text-align: center;
         font-size: 1.2rem;
         width: 100%;
         padding: 0;
