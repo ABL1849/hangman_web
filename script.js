@@ -18,6 +18,7 @@ const increments = Array.from({ length: 7 }, (_, i) => 2351 - i * 391).concat([0
 const loading = document.querySelector('.loading');
 const play_sec = document.querySelector('.play_sec');
 const svg_l = document.querySelector('.svg_l');
+const play_btn = document.querySelector('.play_btn');
 const sentence = document.querySelectorAll('.sentence');
 let currentWordIndex, ct = 0, f = 0, len = 0, win_ct = 0, currentWord;
 
@@ -35,6 +36,7 @@ letters.forEach(letter => {
 let gword;
 
 const randomWord = () => {
+  play_btn.innerHTML = "Wait...";
   fetch('https://random-word-api.herokuapp.com/word')
     .then(response => {
       return response.json();
@@ -102,15 +104,14 @@ const randomDefinition = (gword) => {
       len = 0;
       path.style.strokeDashoffset = 2351;
       path.style.fillOpacity = 0;
-
     })
     .catch(err => {
       randomWord();
     })
 }
-randomWord();
 
 const my_fun = () => {
+  play();
   word.innerHTML = '';
 
   let r1 = Math.floor(Math.random() * currentWord.length);
@@ -125,14 +126,6 @@ const my_fun = () => {
     }
     word.innerHTML += `<span class="hidden text_select_utility">${currentWord[i]}</span>`;
   }
-
-  gsap.from(alphas, {
-    x: -100,
-    opacity: 0,
-    delay: .4,
-    duration: .6,
-    ease: 'ease-out',
-  });
 };
 
 
