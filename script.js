@@ -173,7 +173,7 @@ document.addEventListener('click', function (event) {
             duration: 1,
             opacity: 0,
           })
-          gsap.set(alphas, { x: 0, opacity: 1, })
+          // gsap.set(alphas, { x: 0, opacity: 1, })
           gsap.set(play_svg, { x: 0, opacity: 1 })
           play_body.style.display = "none";
           score_txts.forEach(function (score) {
@@ -252,7 +252,7 @@ function animateSVG() {
           duration: 1,
           opacity: 0,
         })
-        gsap.set(alphas, { x: 0, opacity: 1, })
+        // gsap.set(alphas, { x: 0, opacity: 1, })
         gsap.set(play_svg, { x: 0, opacity: 1 })
         play_body.style.display = "none";
         score_txts.forEach(function (score) {
@@ -295,8 +295,8 @@ function play() {
       duration: .6,
       onComplete() {
         loading.style.display = "none";
-
         play_sec.style.display = "block";
+        gsap.set(alphas, { x: 0, opacity: 1, })
         gsap.from(alphas, {
           x: -200,
           opacity: 0,
