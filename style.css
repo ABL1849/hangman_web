@@ -108,10 +108,18 @@ h1 {
 /* Play Section */
 .text_select_utility {
     user-select: none;
+    
+}
+.hidden{
+    color: #004a4a00;
+}
+.visible_hint{
+    color: #004a4a59;
 }
 
+
 .play_sec {
-    width: 96vw;
+    width: 100vw;
     height: 100vh;
     margin: auto;
     border-radius: .5rem;
@@ -157,6 +165,7 @@ h1 {
 
 .word_guess h2 {
     font-family: cursive;
+    text-align: center;
 }
 
 
@@ -168,8 +177,9 @@ h1 {
     border-bottom: 4px solid #004A4A;
     padding-bottom: 5px;
     font-size: 4rem;
-    color: #004a4a00;
+    
 }
+
 
 /* Play body section */
 
@@ -228,6 +238,7 @@ h1 {
     display: none;
 }
 
+
 .result_sec h2 {
     font-family: cursive;
     font-size: 2rem;
@@ -254,8 +265,8 @@ h1 {
     }
 
     .btn {
-        font-size: 1.4rem;
-        padding: 0.7rem 1.4rem;
+        font-size: 1.2rem;
+        padding: 0.6rem 1.2rem;
     }
 
     .word span {
@@ -265,38 +276,47 @@ h1 {
         border-bottom: 4px solid #004A4A;
         padding-bottom: 4px;
     }
+    .word_guess h2 {
+        font-family: cursive;
+        text-align: center;
+        font-size: 1.2rem;
+        width: 100%;
+        padding: 0;
+    }
 
     .alphas {
-        font-size: 2rem;
-        gap: .8rem;
+        font-size: 1.8rem;
+        gap: .6rem;
     }
-    .play_svg{
+
+    .play_svg {
         scale: .8;
     }
 
     .alphas div {
         display: flex;
-        gap: 1.4rem;
+        gap: 1.2rem;
     }
 
     .result_sec h2 {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        width: 100%;
     }
+
     .play_sec {
         border-radius: .5rem;
-        padding: 1.5rem 3rem;
+        padding: 1rem 2rem;
     }
-    
     .coins,
     .score {
         gap: .5rem;
     }
-    
+
     .coins img,
     .score img {
         width: 1.5rem;
     }
-    
+
     .coins span,
     .score span {
         font-size: 1rem;
