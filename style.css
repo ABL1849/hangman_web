@@ -277,6 +277,7 @@ h1 {
         padding-bottom: 4px;
     }
     .word_guess h2 {
+        font-family: 'Roboto', sans-serif;
         font-size: 1.2rem;
         width: 100%;
         padding: 0;
